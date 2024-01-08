@@ -1,5 +1,11 @@
 {
-  "popCultureHolidays": [
+  "popCultureHolidaysAndEvents": [
+    {
+      "holidayName": "Holy Grail War",
+      "holidayDate": "February 1",
+      "origin": "Fate/Stay Night",
+      "about": "Needs more information"
+    },
   {
     "holidayName": "Galentines Day",
     "holidayDate": "February 13",
@@ -25,7 +31,161 @@
     "about": "Mario Day!"
   },
   {
-    
+    "holidayName": "The Purge",
+    "holidayDate": "March 21",
+    "origin": "The Purge Series",
+    "about": "This is not a test. This is your emergency broadcast system announcing the commencement of the Annual Purge sanctioned by the U.S. Government. Weapons of class 4 and lower have been authorized for use during the Purge. All other weapons are restricted. Government officials of ranking 10 have been granted immunity from the Purge and shall not be harmed. Commencing at the siren, any and all crime, including murder, will be legal for 12 continuous hours. Police, fire, and emergency medical services will be unavailable until tomorrow morning until 7 a.m., when The Purge concludes. Blessed be our New Founding Fathers and America, a nation reborn. May God be with you all."
+  },
+  {
+    "holidayName": "The Perfect Date",
+    "holidayDate": "April 25",
+    "origin": "Miss Congeniality",
+    "about": "What is your idea of a perfect date? April 25, its not too hot, not too cold, all you need is a light jacket."
+  },
+  {
+    "holidayName": "Its gonna be May",
+    "holidayDate": "April 30",
+    "origin": "NSYNC Its gonna be me",
+    "about": "Roses are red, Violets are blue, but in a few days, its gonna be May" 
+  },
+  {
+    "holidayName": "The Battle of Hogwarts",
+    "holidayDate": "May 2",
+    "origin": "Harry Potter",
+    "about": "The end of Voldemorts Reign"
+  },
+  {
+    "holidayName": "May the 4th be with You",
+    "holidayDate": "May 4",
+    "origin": "Star Wars",
+    "about": "May the force be with you"
+  },
+  {
+    "holidayName": "Revenge of the 5th",
+    "holidayDate": "May 5",
+    "origin": "Star Wars",
+    "about": "I am the Senate!"
+  },
+  {
+    "holidayName": "Ferris Buellers Day Off",
+    "holidayDate": "June 5",
+    "origin": "Ferris Buellers Day off",
+    "about": "Best day ever!"
+  },
+  {
+    "holidayName": "Evangelion Day",
+    "holidayDate": "June 22",
+    "origin": "Neon Genesis Evangelion",
+    "about": "Get in the Robot Shinji"
+  },
+  {
+    "holidayName": "Summerween",
+    "holidayDate": "June 22", 
+    "origin": "Gravity Falls",
+    "about": "The people of Gravity Falls love Halloween so much, they created a second version of the holiday"
+  },
+  {
+    "holidayName": "Usagi Tsukinos Birthday",
+    "holidayDate": "June 30",
+    "origin": "Sailor Moon",
+    "about": "Fighting evil by moonlight, winning love by daylight. Never running from a real fight, she is the one named Sailor moon."
+  }, {
+    "holidayName": "Freedom Day",
+    "holidayDate": "July 4",
+    "origin": "Futurama",
+    "about": "The one day of the year where everyone on Earth can express freedom...except for eating a flag."
+  },
+  {
+    "holidayName": "Harry Potters Birthday",
+    "holidayDate": "July 31",
+    "origin": "Harry Potter",
+    "about": "The Boy who liveds Birthday"
+  },
+  {
+    "holidayName": "Judgment Day",
+    "holidayDate": "August 29",
+    "origin": "Terminator Series",
+    "about": "You have been terminated"
+  },
+  {
+    "holidayName": "Weirdmagedon",
+    "holidayDate": "August 31",
+    "origin": "Gravity Falls",
+    "about": "Its technically Dipper and Mabels Birthday, but she accidentally started Weirdmageddon"
+  },
+  {
+    "holidayName": "The first Day of Term at Hogwarts",
+    "holidayDate":"September 1",
+    "origin": "Harry Potter",
+    "about": "Time to head over to Kings Cross station and catch the Hogwarts Express"
+  },
+  {
+    "holidayName": "The Second Impact",
+    "holidayDate": "September 13",
+    "origin": "Neon Genesis Evangelion",
+    "about": "Global cataclysm event"
+  },
+
+  {
+    "holidayName": "PCA Time Capsule is Opened",
+    "holidayDate": "September 18",
+    "origin": "Zoey 101",
+    "about": "The time Capsule buried in Zoey 101 has been opened!"
+  },
+  {
+    "holidayName": "Hobbit Day",
+    "holidayDate": "September 22",
+    "origin": "Lord of the Rings",
+    "about": "What about second breakfast?"
+  },
+  {
+    "holidayName": "October 3rd",
+    "holidayDate": "October 3rd",
+    "origin": "Mean Girls",
+    "about": "On October 3rd, he asked me what day it was"
+  },
+  {
+    "holidayName": "October 3rd",
+    "holidayDate": "October 3rd",
+    "origin": "Fullmetal Alchemist",
+    "about": "The day Ed and Al burned down their house"
+  },
+  {
+    "holidayName": "Leif Ericson Day",
+    "holidayDate": "October 9",
+    "origin": "SpongeBob SquarePants",
+    "about": "Hinga, Dinga, Durgen"
+  },
+
+  {
+    "holidayName": "Treat Yo Self",
+    "holidayDate": "October 13",
+    "origin": "Parks and Recreation",
+    "about": "Treat Yo self!!"
+  },
+  {
+    "holidayName": "Remember, Remember, the 5th of November",
+    "holidayDate": "November 5",
+    "origin:": "V for Vendetta",
+    "about": "Remember, Remember the 5th of November."
+  },
+  {
+    "holidayName": "Sword Art Online Offical Release",
+    "holidayDate": "November 6",
+    "origin": "Sword Art Online",
+    "about": "The release date of Sword Art Online"
+  },
+  {
+    "holidayName": "N7 Day",
+    "holidayDate": "November 7",
+    "origin": "Mass Effect",
+    "about": "The date is intentional: The military special forces rank of Captain Shepard, the main character in the Mass Effect games, is N7: “N” signifies special forces and “7” is the highest proficiency level"
+  },
+  {
+    "holidayName": "Light Yagami Picks up the death Note",
+    "holidayDate": "November 28",
+    "origin": "Death Note",
+    "about": "Light picks up the death note"
   }
 ]
 }
