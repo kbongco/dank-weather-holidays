@@ -1,0 +1,31 @@
+{
+  "popCultureHolidays": [
+  {
+    "holidayName": "Galentines Day",
+    "holidayDate": "February 13",
+    "origin": "Parks and Recreation",
+    "about": "A global holiday that celebrates womens friendship"
+  },
+  {
+    "holidayName": "Annoy Squidward Day",
+    "holidayDate": "February 15",
+    "origin": "SpongeBob SquarePants",
+    "about": "A holiday to annoy Squidward"
+  },
+  {
+    "holidayName": "National Pokemon Day",
+    "holidayDate": "February 27",
+    "origin": "Pokemon",
+    "about": "The day Pokemon was released"
+  },
+  {
+    "holidayName": "Mar10 Day",
+    "holidayDate": "March 10",
+    "origin": "Super Mario",
+    "about": "Mario Day!"
+  },
+  {
+    
+  }
+]
+}
