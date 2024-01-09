@@ -6,6 +6,7 @@ let month = date.getMonth() + 1;
 let year = date.getFullYear();
 let currentDate;
 let eventsAndHolidays;
+
 const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 const the12Seasons = ['Winter', 'Fools Spring', 'Second Winter', 'Spring of Deception', 'Third Winter', 'The Pollening', 'Actual Spring', 'Summer', 'Hells Front Porch', 'False Fall', 'Second Summer', 'Actual Fall']
 // Figure out how to handle Southern Hemisphere Countries 
@@ -75,10 +76,10 @@ function getWeather() {
     })
     .then((data) => {
       console.log(data);
-      console.log(data.main.temp);
       const funnyQuote = funnyWeatherQuotes(data.main.temp, data.main.feels_like);
       document.getElementById("quote-text").textContent = funnyQuote;
-      console.log(funnyQuote);
+      const resultContainer = document.getElementById("weather-information");
+      resultContainer.classList.remove("hidden");
     })
     .catch((error) => {
       console.error(error);
@@ -103,6 +104,16 @@ function getWeather() {
 // temp_min
 // : 
 // 33.91
+
+// Function to display icons, special 
+// This takes in temperature if 90C or feels like 90 or more show fire 
+// If temperature is lower than 30 or feels like 30, throw in brick icon
+
+// function specialIcon(temperature) {
+//   switch (temperature.toLowerCase()) {
+//     case: 
+//   }
+// }
 
 function funnyWeatherQuotes(temperature, feels_like) {
   if (temperature >= 90 || feels_like > 90) {
