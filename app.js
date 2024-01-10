@@ -6,13 +6,16 @@ let month = date.getMonth() + 1;
 let year = date.getFullYear();
 let currentDate;
 let eventsAndHolidays;
-
 const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 const the12Seasons = ['Winter', 'Fools Spring', 'Second Winter', 'Spring of Deception', 'Third Winter', 'The Pollening', 'Actual Spring', 'Summer', 'Hells Front Porch', 'False Fall', 'Second Summer', 'Actual Fall']
 // Figure out how to handle Southern Hemisphere Countries 
 // Cannot find API that would list countries/Continents in Southern Hemisphere 
 // Decided to store it in an array which would contain all the countries there :) 
+// Figure out how to handle countries that only have wet and dry season? 
+
 const southernHemisphere = ['Angola', 'Botswana', 'Burundi', 'Eswatini', 'Lesotho', 'Malawi', 'Mozambique', 'Namibia', 'Rwanda', 'South Africa', 'Tanzania', 'Zambia', 'Zimbabwe', 'Democratic Republic of Congo', 'Gabon', 'Republic of the Congo', 'Argentina', 'Bolivia', 'Chile', 'Paraguay', 'Peru', 'Uruguay', 'Brazil', 'Ecuador', 'Antarctica', 'Papua New Guinea', 'Australia', 'New Zealand'];
+
+
 
 function getCurrentDate(day, month, year) {
   const months = [
@@ -77,9 +80,16 @@ function getWeather() {
     .then((data) => {
       console.log(data);
       const funnyQuote = funnyWeatherQuotes(data.main.temp, data.main.feels_like);
+      console.log(data.weather[0].main);
+      document.getElementById("current-weather").textContent = data.weather[0].main;
+      document.getElementById("current-feels").textContent = data.main.feels_like;
+      document.getElementById("current-temperature").textContent = data.main.temp;
       document.getElementById("quote-text").textContent = funnyQuote;
       const resultContainer = document.getElementById("weather-information");
+      const additionalContainer = document.getElementById("additional-information");
+      additionalContainer.classList.remove("hidden");
       resultContainer.classList.remove("hidden");
+      specialIcon(data.main.temp);
     })
     .catch((error) => {
       console.error(error);
@@ -109,11 +119,15 @@ function getWeather() {
 // This takes in temperature if 90C or feels like 90 or more show fire 
 // If temperature is lower than 30 or feels like 30, throw in brick icon
 
-// function specialIcon(temperature) {
-//   switch (temperature.toLowerCase()) {
-//     case: 
-//   }
-// }
+function specialIcon(temperature) {
+  if (temperature > 80) {
+    console.log(temperature);
+    weatherIcon.classList.add('fas', 'fa-fire');
+  } else {
+    console.log(temperature);
+    console.log('not needed');
+  }
+}
 
 function funnyWeatherQuotes(temperature, feels_like) {
   if (temperature >= 90 || feels_like > 90) {

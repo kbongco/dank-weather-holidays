@@ -14,3 +14,14 @@ p {
 .hidden {
   display: none;
 }
+
+.search-button {
+  background-color: #00FF8F;
+  border-radius: 15px;
+  color: black;
+}
+
+.nowrap-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
