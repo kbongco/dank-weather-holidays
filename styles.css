@@ -25,3 +25,9 @@ p {
   display: flex;
   flex-wrap: nowrap;
 }
+
+.icon-container {
+  display: flex;
+  margin-top: 16px;
+  justify-content: center;
+}

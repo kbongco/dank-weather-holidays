@@ -5,7 +5,9 @@ let day = date.getDate();
 let month = date.getMonth() + 1;
 let year = date.getFullYear();
 let currentDate;
+let currentMonth;
 let eventsAndHolidays;
+let iconCode;
 const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 const the12Seasons = ['Winter', 'Fools Spring', 'Second Winter', 'Spring of Deception', 'Third Winter', 'The Pollening', 'Actual Spring', 'Summer', 'Hells Front Porch', 'False Fall', 'Second Summer', 'Actual Fall']
 // Figure out how to handle Southern Hemisphere Countries 
@@ -34,11 +36,11 @@ function getCurrentDate(day, month, year) {
   ];
 
   const monthName = months[month - 1]; 
+  currentMonth = monthName;
   currentDate = `${monthName} ${day} ${year}`
-
+  console.log(currentMonth);
   return currentDate;
 }
-
 function getHolidays() {
   fetch("./pop-culture.json")
     .then((response) => response.json())
@@ -78,18 +80,24 @@ function getWeather() {
       return response.json(); 
     })
     .then((data) => {
+      iconCode = data.weather[0].icon;
+      const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
       console.log(data);
       const funnyQuote = funnyWeatherQuotes(data.main.temp, data.main.feels_like);
       console.log(data.weather[0].main);
+      console.log(data.weather[0].icon);
       document.getElementById("current-weather").textContent = data.weather[0].main;
       document.getElementById("current-feels").textContent = data.main.feels_like;
       document.getElementById("current-temperature").textContent = data.main.temp;
       document.getElementById("quote-text").textContent = funnyQuote;
+      const weatherIcon = document.getElementById("regular-weather-icon")
+      weatherIcon.src = iconUrl;
       const resultContainer = document.getElementById("weather-information");
       const additionalContainer = document.getElementById("additional-information");
       additionalContainer.classList.remove("hidden");
       resultContainer.classList.remove("hidden");
       specialIcon(data.main.temp);
+      aboveBelowAverage(data.main.temp, currentMonth);
     })
     .catch((error) => {
       console.error(error);
@@ -114,6 +122,24 @@ function getWeather() {
 // temp_min
 // : 
 // 33.91
+
+// weather
+// : 
+// Array(1)
+// 0
+// : 
+// description
+// : 
+// "broken clouds"
+// icon
+// : 
+// "04n"
+// id
+// : 
+// 803
+// main
+// : 
+// "Clouds"
 
 // Function to display icons, special 
 // This takes in temperature if 90C or feels like 90 or more show fire 
@@ -147,6 +173,14 @@ function funnyWeatherQuotes(temperature, feels_like) {
   }
 }
 
+function aboveBelowAverage(temperature, currentMonth) {
+  console.log(currentMonth);
+  if (currentMonth === 'January' && temperature < 45) {
+    console.log('Global warming is that you? ')
+  }
+}
+
+
 function matchByDate() {
   const filteredEvents = eventsAndHolidays.popCultureHolidaysAndEvents.filter((event) => {
     return currentDate.includes(event.holidayDate);
@@ -154,6 +188,12 @@ function matchByDate() {
   return filteredEvents.length > 0
     ? filteredEvents.map(event => event.holidayName).join(', ')
     : 'There is no special holiday this time...';
+}
+
+function revengeOfTheFifth(currentDate) {
+  if (currentDate.includes("May 5")) {
+    document.body.style.backgroundColor = 'black';
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -164,4 +204,5 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log(todaysDate);
 
   getHolidays();  
+  revengeOfTheFifth(currentDate);
 });
