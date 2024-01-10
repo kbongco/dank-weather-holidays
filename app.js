@@ -8,6 +8,7 @@ let currentDate;
 let currentMonth;
 let eventsAndHolidays;
 let iconCode;
+
 const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 const the12Seasons = ['Winter', 'Fools Spring', 'Second Winter', 'Spring of Deception', 'Third Winter', 'The Pollening', 'Actual Spring', 'Summer', 'Hells Front Porch', 'False Fall', 'Second Summer', 'Actual Fall']
 // Figure out how to handle Southern Hemisphere Countries 
@@ -149,9 +150,28 @@ function specialIcon(temperature) {
   if (temperature > 80) {
     console.log(temperature);
     weatherIcon.classList.add('fas', 'fa-fire');
-  } else {
-    console.log(temperature);
-    console.log('not needed');
+  } else if (temperature < 32) {
+    weatherIcon.classList.add('fas', 'fa-trowel-bricks')
+  } 
+}
+
+function displaySznInfo(temperature, currentMonth, the12Seasons) {
+  if (currentMonth === 'January' || currentMonth === 'February' || currentMonth === 'December') {
+    return the12Seasons[0];
+  } else if ((currentMonth === 'January' && temperature > 40 ) || (currentMonth === 'February' && temperature > 40)) {
+    return the12Seasons[1];
+  } else if ((currentMonth === 'March' && temperature < 40) || (currentMonth === 'April' && temperature < 40)) {
+    return the12Seasons[2];
+  } else if (currentMonth === 'March' && temperature > 40) {
+    return the12Seasons[3];
+  } else if (currentMonth === 'March' && temperature < 40) {
+    return the12Seasons[4];
+  } else if (currentMonth === 'April') {
+    return the12Seasons[5];
+  } else if (currentMonth === 'April' || currentMonth === 'May') {
+    return the12Seasons[6];
+  } else if (currentMonth === 'June' || currentMonth === 'July' || currentMonth === 'August') {
+    return the12Seasons[7];
   }
 }
 
@@ -179,6 +199,7 @@ function aboveBelowAverage(temperature, currentMonth) {
     console.log('Global warming is that you? ')
   }
 }
+
 
 
 function matchByDate() {
