@@ -1,1 +1,5 @@
 apikey.js
+node_modules
+dist
+.cache
+.env
