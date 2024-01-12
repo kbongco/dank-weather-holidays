@@ -49976,8 +49976,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 // import weatherapiKey from './apikey.js';
 require('dotenv').config();
 var weatherapiKey = "cd84a7e318d6c895ed695c2fd979208f";
-// const weatherapiKey = "cd84a7e318d6c895ed695c2fd979208f";
-console.log(weatherapiKey);
 var date = new Date();
 var day = date.getDate();
 var month = date.getMonth() + 1;
@@ -50087,6 +50085,10 @@ function displaySznInfo(temperature, currentMonth, the12Seasons) {
     return the12Seasons[6];
   } else if (currentMonth === "June" || currentMonth === "July" || currentMonth === "August") {
     return the12Seasons[7];
+  } else if (currentMonth === "June" && temperature > 90 || currentMonth === "July" && temperature > 90 || currentMonth === "August" && temperature > 90) {
+    return the12Seasons[8];
+  } else if (currentMonth === "September" && temperature < 70) {
+    return the12Seasons[9];
   }
 }
 function funnyWeatherQuotes(temperature, feels_like) {

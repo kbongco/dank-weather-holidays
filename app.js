@@ -1,7 +1,6 @@
 // import weatherapiKey from './apikey.js';
 require('dotenv').config();
 const weatherapiKey = process.env.API_KEY;
-console.log(weatherapiKey)
 const date = new Date();
 let day = date.getDate();
 let month = date.getMonth() + 1;
@@ -189,9 +188,11 @@ function displaySznInfo(temperature, currentMonth, the12Seasons) {
     currentMonth === "August"
   ) {
     return the12Seasons[7];
-  } else if (
-
-  )
+  } else if ((currentMonth === "June" && temperature > 90) || (currentMonth === "July" && temperature > 90) || (currentMonth === "August" && temperature > 90)) {
+    return the12Seasons[8];
+  } else if ((currentMonth === "September" && temperature < 70)) {
+    return the12Seasons[9];
+  }
 }
 
 function funnyWeatherQuotes(temperature, feels_like) {
