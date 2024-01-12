@@ -1,5 +1,5 @@
-// import WEATHER_API_KEY from './apikey.js';
-
+// import weatherapiKey from './apikey.js';
+require('dotenv').config();
 const date = new Date();
 let day = date.getDate();
 let month = date.getMonth() + 1;
@@ -8,6 +8,8 @@ let currentDate;
 let currentMonth;
 let eventsAndHolidays;
 let iconCode;
+
+const weatherapiKey = process.env.API_KEY;
 
 const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 const the12Seasons = [
@@ -100,9 +102,9 @@ function getHolidays() {
     });
 }
 
-function getWeather() {
+ window.getWeather = () => {
   let cityInput = document.getElementById("city-search").value;
-  const getCityAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=1&appid=${WEATHER_API_KEY}`;
+  const getCityAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=1&appid=${weatherapiKey}`;
 
   fetch(getCityAPI)
     .then((res) => {
@@ -112,8 +114,8 @@ function getWeather() {
       if (data.length > 0) {
         const lat = data[0].lat;
         const lon = data[0].lon;
-        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${WEATHER_API_KEY}`;
-        const airQualityApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`;
+        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${weatherapiKey}`;
+        const airQualityApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherapiKey}`;
 
         return Promise.all([
           fetch(weatherApiUrl).then((response) => response.json()),
