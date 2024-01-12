@@ -1,7 +1,6 @@
 // import weatherapiKey from './apikey.js';
 require('dotenv').config();
 const weatherapiKey = process.env.API_KEY;
-// const weatherapiKey = "cd84a7e318d6c895ed695c2fd979208f";
 console.log(weatherapiKey)
 const date = new Date();
 let day = date.getDate();
@@ -150,69 +149,6 @@ window.getWeather = () => {
     });
 }
 
-function selectOutfitBasedOnSzn(the12Seasons) {
-  
-}
-
-// feels_like
-// :
-// 29.21
-// humidity
-// :
-// 48
-// pressure
-// :
-// 1019
-// temp
-// :
-// 36.95
-// temp_max
-// :
-// 39.96
-// temp_min
-// :
-// 33.91
-
-// weather
-// :
-// Array(1)
-// 0
-// :
-// description
-// :
-// "broken clouds"
-// icon
-// :
-// "04n"
-// id
-// :
-// 803
-// main
-// :
-// "Clouds"
-
-// AQI 
-// list
-// : 
-// Array(1)
-// 0
-// : 
-// components
-// : 
-// {co: 520.71, no: 0, no2: 11.31, o3: 82.97, so2: 10.61, …}
-// dt
-// : 
-// 1705000899
-// main
-// : 
-// aqi
-// : 
-// 2
-
-// Function to display icons, special
-// This takes in temperature if 90C or feels like 90 or more show fire
-// If temperature is lower than 30 or feels like 30, throw in brick icon
-
 function specialIcon(temperature) {
   if (temperature > 80) {
     console.log(temperature);
@@ -253,7 +189,9 @@ function displaySznInfo(temperature, currentMonth, the12Seasons) {
     currentMonth === "August"
   ) {
     return the12Seasons[7];
-  }
+  } else if (
+
+  )
 }
 
 function funnyWeatherQuotes(temperature, feels_like) {
