@@ -10,3 +10,28 @@ h1 {
 p {
   font-family: 'Nunito Sans', sans-serif; 
 }
+
+.hidden {
+  display: none;
+}
+
+.search-button {
+  background-color: #00FF8F;
+  border-radius: 15px;
+  color: black;
+}
+
+.nowrap-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.icon-container {
+  display: flex;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.search-label {
+  margin-bottom: 8px;
+}
