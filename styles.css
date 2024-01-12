@@ -31,3 +31,7 @@ p {
   margin-top: 16px;
   justify-content: center;
 }
+
+.search-label {
+  margin-bottom: 8px;
+}
