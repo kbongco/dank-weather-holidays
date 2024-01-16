@@ -1,7 +1,5 @@
-// import weatherapiKey from './apikey.js';
 require('dotenv').config();
 import data from './pop-culture.json';
-console.log(data);
 const date = new Date();
 let day = date.getDate();
 let month = date.getMonth() + 1;
@@ -28,42 +26,22 @@ const the12Seasons = [
   "Second Summer",
   "Actual Fall",
 ];
-
+const dryAndWetTropics = [{
+  dry: ['December', 'January', 'February', 'March', 'April', 'May'],
+  wet: ['June', 'July', 'August', 'September', 'October', 'November']
+}];
 const winterOutfits = ['A jacket and a scarf might be nice', 'You need a jacket', 'Jacket, gloves, and a scarf', 'Wear some thermals too!']
 const springOutfits = ['A hoodie or a light jacket'];
 const summerOutfits = ['Whatever makes you happy', 'Some shorts and a tank', 'Gotta wear some shades with your outfit']
 const fallOutfits = ['Shorts in the afternoon, jeans in the morning']
-// Change this to use lat and long
-const southernHemisphere = [
-  "Angola",
-  "Botswana",
-  "Burundi",
-  "Eswatini",
-  "Lesotho",
-  "Malawi",
-  "Mozambique",
-  "Namibia",
-  "Rwanda",
-  "South Africa",
-  "Tanzania",
-  "Zambia",
-  "Zimbabwe",
-  "Democratic Republic of Congo",
-  "Gabon",
-  "Republic of the Congo",
-  "Argentina",
-  "Bolivia",
-  "Chile",
-  "Paraguay",
-  "Peru",
-  "Uruguay",
-  "Brazil",
-  "Ecuador",
-  "Antarctica",
-  "Papua New Guinea",
-  "Australia",
-  "New Zealand",
-];
+
+const southernHemisphereSzn = [{
+  summer: ['December', 'January', 'February'],
+  fall: ['March', 'April', 'May'],
+  winter: ['June', 'July', 'August'],
+  spring: ['September', 'Ocobter', 'November']
+
+}]
 
 function getCurrentDate(day, month, year) {
   const months = [
@@ -84,9 +62,9 @@ function getCurrentDate(day, month, year) {
   const monthName = months[month - 1];
   currentMonth = monthName;
   currentDate = `${monthName} ${day} ${year}`;
-  console.log(currentMonth);
   return currentDate;
 }
+
 function getHolidays() {
   eventsAndHolidays = data.popCultureHolidaysAndEvents;
   const holidayText = matchByDate();
@@ -95,7 +73,11 @@ function getHolidays() {
 
 
 
- window.getWeather = () => {
+window.getWeather = () => {
+  let lat;
+  let lon;
+  let name;
+  let country;
   let cityInput = document.getElementById("city-search").value;
   const getCityAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=1&appid=${weatherapiKey}`;
 
@@ -104,9 +86,12 @@ function getHolidays() {
       return res.json();
     })
     .then((data) => {
+      console.log(data);
       if (data.length > 0) {
-        const lat = data[0].lat;
-        const lon = data[0].lon;
+        lat = data[0].lat;
+        lon = data[0].lon;
+        name = data[0].name;
+        country = data[0].country;
         const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${weatherapiKey}`;
         const airQualityApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherapiKey}`;
 
@@ -125,12 +110,12 @@ function getHolidays() {
       document.getElementById("current-feels").textContent = `Feels like: ${weatherData.main.feels_like}`;
       document.getElementById("current-temperature").textContent = `Current Temperature: ${weatherData.main.temp}`
       document.getElementById('airquality-card').textContent = returnAirQualityIndex(airQualityData.list[0].main.aqi);
+      document.getElementById('current-location').textContent = `Current weather for ${name}, ${country}`;
       const resultContainer = document.getElementById("weather-information");
       const additionalContainer = document.getElementById(
         "additional-information"
       );
-      const currentSeason = displaySznInfo(weatherData.weather[0].main, currentMonth, the12Seasons)
-      console.log(currentSeason);
+      const currentSeason = determineSeason(lat, currentMonth, weatherData, dryAndWetTropics, the12Seasons, southernHemisphereSzn)
       document.getElementById('current-season').textContent = currentSeason;
       additionalContainer.classList.remove("hidden");
       resultContainer.classList.remove("hidden");
@@ -146,68 +131,8 @@ function selectOutfitBasedOnSzn(the12Seasons) {
   
 }
 
-// feels_like
-// :
-// 29.21
-// humidity
-// :
-// 48
-// pressure
-// :
-// 1019
-// temp
-// :
-// 36.95
-// temp_max
-// :
-// 39.96
-// temp_min
-// :
-// 33.91
-
-// weather
-// :
-// Array(1)
-// 0
-// :
-// description
-// :
-// "broken clouds"
-// icon
-// :
-// "04n"
-// id
-// :
-// 803
-// main
-// :
-// "Clouds"
-
-// AQI 
-// list
-// : 
-// Array(1)
-// 0
-// : 
-// components
-// : 
-// {co: 520.71, no: 0, no2: 11.31, o3: 82.97, so2: 10.61, …}
-// dt
-// : 
-// 1705000899
-// main
-// : 
-// aqi
-// : 
-// 2
-
-// Function to display icons, special
-// This takes in temperature if 90C or feels like 90 or more show fire
-// If temperature is lower than 30 or feels like 30, throw in brick icon
-
 function specialIcon(temperature) {
   if (temperature > 80) {
-    console.log(temperature);
     weatherIcon.classList.add("fas", "fa-fire");
   } else if (temperature < 32) {
     weatherIcon.classList.add("fas", "fa-trowel-bricks");
@@ -248,13 +173,33 @@ function displaySznInfo(temperature, currentMonth, the12Seasons) {
   }
 }
 
-function tropicsSzn(lat, lon) {
-  
+
+function tropicSzn(lat, currentMonth, dryAndWetTropics) {
+  if (lat < 23.5 && lat > -23.5) {
+    const tropicsInfo = dryAndWetTropics[0];
+    if (tropicsInfo.dry.includes(currentMonth)) {
+      return 'dry';
+    } else if (tropicsInfo.wet.includes(currentMonth)) {
+      return 'wet';
+    }
+  } else {
+    return 'notInTropics';
+  }
+}
+
+function checkSouthernHemisphere(lat, currentMonth, southernHemisphereSzn) {
+  if (lat < 0) {
+    const southernHemisphereSzns = southernHemisphereSzn[0];
+
+    for (const season in southernHemisphereSzns) {
+      if (southernHemisphereSzns[season].includes(currentMonth)) {
+        return season;
+      }
+    }
+  }
 }
 
 function funnyWeatherQuotes(temperature, feels_like) {
-  console.log(temperature);
-  console.log(temperature <= 40);
   if (temperature >= 90 && feels_like > 90) {
     return "Bro, it's way too fcking hot. Remember to hydrate!";
   } else if (temperature >= 80 && feels_like > 80) {
@@ -267,6 +212,34 @@ function funnyWeatherQuotes(temperature, feels_like) {
     return "Okay, it's way too fcking cold. Why are you out?";
   } else {
     return "Nothing out of the ordinary here!";
+  }
+}
+
+function determineSeason(lat, currentMonth, weatherData, dryAndWetTropics, the12Seasons, southernHemisphereSzn) {
+  // Check if the location is in the tropics
+  if (lat < 23.5 && lat > -23.5) {
+    for (const tropicSeason in dryAndWetTropics[0]) {
+      if (dryAndWetTropics[0][tropicSeason].includes(currentMonth)) {
+        return tropicSeason;
+      }
+    }
+  }
+
+  // Check if the location is in the Southern Hemisphere
+  if (lat < 0) {
+    const southernHemisphereSzns = southernHemisphereSzn[0];
+    for (const southernSeason in southernHemisphereSzns) {
+      if (southernHemisphereSzns[southernSeason].includes(currentMonth)) {
+        return southernSeason;
+      }
+    }
+  }
+
+  // Default to the 12-season check
+  for (let i = 0; i < the12Seasons.length; i++) {
+    if (displaySznInfo(weatherData.weather[0].main, currentMonth, the12Seasons) === the12Seasons[i]) {
+      return the12Seasons[i];
+    }
   }
 }
 
@@ -291,7 +264,6 @@ function returnAirQualityIndex(aqi) {
 function matchByDate() {
   const filteredEvents = eventsAndHolidays.filter(
     (event) => {
-      console.log(currentDate.includes(event.holidayDate));
       return currentDate.includes(event.holidayDate);
     }
   );
@@ -310,7 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const todaysDate = getCurrentDate(day, month, year);
 
   document.getElementById("current-date").textContent = todaysDate;
-  console.log(todaysDate);
 
   getHolidays();
   revengeOfTheFifth(currentDate);
