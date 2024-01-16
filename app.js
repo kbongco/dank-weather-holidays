@@ -1,5 +1,7 @@
-// import WEATHER_API_KEY from './apikey.js';
-
+// import weatherapiKey from './apikey.js';
+require('dotenv').config();
+import data from './pop-culture.json';
+console.log(data);
 const date = new Date();
 let day = date.getDate();
 let month = date.getMonth() + 1;
@@ -8,6 +10,8 @@ let currentDate;
 let currentMonth;
 let eventsAndHolidays;
 let iconCode;
+
+const weatherapiKey = process.env.API_KEY;
 
 const dateOptions = { year: "numeric", month: "long", day: "numeric" };
 const the12Seasons = [
@@ -84,25 +88,16 @@ function getCurrentDate(day, month, year) {
   return currentDate;
 }
 function getHolidays() {
-  fetch("./pop-culture.json")
-    .then((response) => response.json())
-    .then((data) => {
-      eventsAndHolidays = data;
-      const text = matchByDate();
-      console.log(text);
-    })
-    .then(() => {
-      const holidayText = matchByDate();
-      document.getElementById("holiday-text").textContent = holidayText;
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  eventsAndHolidays = data.popCultureHolidaysAndEvents;
+  const holidayText = matchByDate();
+  document.getElementById("holiday-text").textContent = holidayText;
 }
 
-function getWeather() {
+
+
+ window.getWeather = () => {
   let cityInput = document.getElementById("city-search").value;
-  const getCityAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=1&appid=${WEATHER_API_KEY}`;
+  const getCityAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=1&appid=${weatherapiKey}`;
 
   fetch(getCityAPI)
     .then((res) => {
@@ -112,8 +107,8 @@ function getWeather() {
       if (data.length > 0) {
         const lat = data[0].lat;
         const lon = data[0].lon;
-        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${WEATHER_API_KEY}`;
-        const airQualityApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}`;
+        const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${weatherapiKey}`;
+        const airQualityApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherapiKey}`;
 
         return Promise.all([
           fetch(weatherApiUrl).then((response) => response.json()),
@@ -253,18 +248,22 @@ function displaySznInfo(temperature, currentMonth, the12Seasons) {
   }
 }
 
+function tropicsSzn(lat, lon) {
+  
+}
+
 function funnyWeatherQuotes(temperature, feels_like) {
-  if (temperature >= 90 || feels_like > 90) {
+  console.log(temperature);
+  console.log(temperature <= 40);
+  if (temperature >= 90 && feels_like > 90) {
     return "Bro, it's way too fcking hot. Remember to hydrate!";
-  } else if (temperature >= 80 || feels_like > 80) {
+  } else if (temperature >= 80 && feels_like > 80) {
     return "It's getting hot in here, so take off all your clothes";
-  } else if (temperature >= 70 || feels_like > 70) {
-    return "It's pretty nice out, maybe you should wear a light jacket or a hoodie?";
-  } else if (temperature <= 40 || feels_like < 40) {
-    return "Yo, it's starting to get a little cold";
+  } else if (temperature >= 70 && feels_like > 70) {
+    return "It's pretty nice out";
   } else if (temperature <= 30 || feels_like < 30) {
     return "It's brick outside";
-  } else if (temperature < 20 || feels_like < 20) {
+  } else if (temperature < 20 && feels_like < 20) {
     return "Okay, it's way too fcking cold. Why are you out?";
   } else {
     return "Nothing out of the ordinary here!";
@@ -288,16 +287,11 @@ function returnAirQualityIndex(aqi) {
   }
 }
 
-function aboveBelowAverage(temperature, currentMonth) {
-  console.log(currentMonth);
-  if (currentMonth === "January" && temperature < 45) {
-    console.log("Global warming is that you? ");
-  }
-}
 
 function matchByDate() {
-  const filteredEvents = eventsAndHolidays.popCultureHolidaysAndEvents.filter(
+  const filteredEvents = eventsAndHolidays.filter(
     (event) => {
+      console.log(currentDate.includes(event.holidayDate));
       return currentDate.includes(event.holidayDate);
     }
   );
