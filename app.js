@@ -76,6 +76,8 @@ function getHolidays() {
 window.getWeather = () => {
   let lat;
   let lon;
+  let name;
+  let country;
   let cityInput = document.getElementById("city-search").value;
   const getCityAPI = `http://api.openweathermap.org/geo/1.0/direct?q=${cityInput}&limit=1&appid=${weatherapiKey}`;
 
@@ -84,9 +86,12 @@ window.getWeather = () => {
       return res.json();
     })
     .then((data) => {
+      console.log(data);
       if (data.length > 0) {
         lat = data[0].lat;
         lon = data[0].lon;
+        name = data[0].name;
+        country = data[0].country;
         const weatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${weatherapiKey}`;
         const airQualityApiUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${weatherapiKey}`;
 
@@ -105,6 +110,7 @@ window.getWeather = () => {
       document.getElementById("current-feels").textContent = `Feels like: ${weatherData.main.feels_like}`;
       document.getElementById("current-temperature").textContent = `Current Temperature: ${weatherData.main.temp}`
       document.getElementById('airquality-card').textContent = returnAirQualityIndex(airQualityData.list[0].main.aqi);
+      document.getElementById('current-location').textContent = `Current weather for ${name}, ${country}`;
       const resultContainer = document.getElementById("weather-information");
       const additionalContainer = document.getElementById(
         "additional-information"
