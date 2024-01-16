@@ -1,7 +1,5 @@
-// import weatherapiKey from './apikey.js';
 require('dotenv').config();
 import data from './pop-culture.json';
-console.log(data);
 const date = new Date();
 let day = date.getDate();
 let month = date.getMonth() + 1;
@@ -36,37 +34,6 @@ const winterOutfits = ['A jacket and a scarf might be nice', 'You need a jacket'
 const springOutfits = ['A hoodie or a light jacket'];
 const summerOutfits = ['Whatever makes you happy', 'Some shorts and a tank', 'Gotta wear some shades with your outfit']
 const fallOutfits = ['Shorts in the afternoon, jeans in the morning']
-// Change this to use lat and long
-const southernHemisphere = [
-  "Angola",
-  "Botswana",
-  "Burundi",
-  "Eswatini",
-  "Lesotho",
-  "Malawi",
-  "Mozambique",
-  "Namibia",
-  "Rwanda",
-  "South Africa",
-  "Tanzania",
-  "Zambia",
-  "Zimbabwe",
-  "Democratic Republic of Congo",
-  "Gabon",
-  "Republic of the Congo",
-  "Argentina",
-  "Bolivia",
-  "Chile",
-  "Paraguay",
-  "Peru",
-  "Uruguay",
-  "Brazil",
-  "Ecuador",
-  "Antarctica",
-  "Papua New Guinea",
-  "Australia",
-  "New Zealand",
-];
 
 const southernHemisphereSzn = [{
   summer: ['December', 'January', 'February'],
@@ -95,7 +62,6 @@ function getCurrentDate(day, month, year) {
   const monthName = months[month - 1];
   currentMonth = monthName;
   currentDate = `${monthName} ${day} ${year}`;
-  console.log(currentMonth);
   return currentDate;
 }
 
@@ -131,7 +97,6 @@ window.getWeather = () => {
       }
     })
     .then(([weatherData, airQualityData]) => {
-      console.log(lat);
       iconCode = weatherData.weather[0].icon;
       const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
       const weatherIcon = document.getElementById("regular-weather-icon")
@@ -145,10 +110,6 @@ window.getWeather = () => {
         "additional-information"
       );
       const currentSeason = determineSeason(lat, currentMonth, weatherData, dryAndWetTropics, the12Seasons, southernHemisphereSzn)
-      console.log(lat < 23.5 && lat > -23.5);
-      console.log(lat, 'test');
-      console.log(currentMonth);
-      console.log(currentSeason);
       document.getElementById('current-season').textContent = currentSeason;
       additionalContainer.classList.remove("hidden");
       resultContainer.classList.remove("hidden");
@@ -166,7 +127,6 @@ function selectOutfitBasedOnSzn(the12Seasons) {
 
 function specialIcon(temperature) {
   if (temperature > 80) {
-    console.log(temperature);
     weatherIcon.classList.add("fas", "fa-fire");
   } else if (temperature < 32) {
     weatherIcon.classList.add("fas", "fa-trowel-bricks");
@@ -234,8 +194,6 @@ function checkSouthernHemisphere(lat, currentMonth, southernHemisphereSzn) {
 }
 
 function funnyWeatherQuotes(temperature, feels_like) {
-  console.log(temperature);
-  console.log(temperature <= 40);
   if (temperature >= 90 && feels_like > 90) {
     return "Bro, it's way too fcking hot. Remember to hydrate!";
   } else if (temperature >= 80 && feels_like > 80) {
@@ -300,7 +258,6 @@ function returnAirQualityIndex(aqi) {
 function matchByDate() {
   const filteredEvents = eventsAndHolidays.filter(
     (event) => {
-      console.log(currentDate.includes(event.holidayDate));
       return currentDate.includes(event.holidayDate);
     }
   );
@@ -319,7 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const todaysDate = getCurrentDate(day, month, year);
 
   document.getElementById("current-date").textContent = todaysDate;
-  console.log(todaysDate);
 
   getHolidays();
   revengeOfTheFifth(currentDate);
