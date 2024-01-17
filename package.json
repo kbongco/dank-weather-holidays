@@ -1,5 +1,1 @@
-{
-  "dependencies": {
-    "dotenv": "^16.3.1"
-  }
-}
+{"type":"module","scripts":{"start":"parcel index.html","build":"parcel build index.html"},"dependencies":{"dotenv":"^16.3.1"},"devDependencies":{"cssnano":"^4.1.11","postcss":"^8.4.33","postcss-preset-env":"^6.7.0"}}
